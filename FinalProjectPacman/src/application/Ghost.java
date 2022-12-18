@@ -142,4 +142,61 @@ public class Ghost extends Rectangle implements Runnable {
         }
 
     }
+    
+    /**
+     * Creates an animation of the ghost
+     */
+    public void createAnimation() {
+
+        this.animation = new AnimationTimer()
+        {
+            public void handle(long currentNanoTime)
+            {
+                gameManager.checkGhostCoalition();
+                double leftEdge = getX();
+                double topEdge = getY();
+                double rightEdge = getX() + getWidth();
+                double bottomEdge = getY() + getHeight();
+                double padding = 12;
+                timesWalked++;
+                int walkAtLeast = 4;
+                switch (direction) {
+                    case "left":
+                        moveUntilYouCant("left", "down", leftEdge, topEdge, rightEdge, bottomEdge, padding);
+                        if (timesWalked > walkAtLeast) {
+                            checkIftheresPathToGo(getRandomDirection("left", "right"));
+                            timesWalked = 0;
+                        }
+                        break;
+                    case "right":
+                        moveUntilYouCant("right", "up", leftEdge, topEdge, rightEdge, bottomEdge, padding);
+                        if (timesWalked > walkAtLeast) {
+                            checkIftheresPathToGo(getRandomDirection("left", "right"));
+                            timesWalked = 0;
+                        }
+                        break;
+                    case "up":
+                        moveUntilYouCant("up", "left", leftEdge, topEdge, rightEdge, bottomEdge, padding);
+                        if (timesWalked > walkAtLeast) {
+                            checkIftheresPathToGo(getRandomDirection("up", "down"));
+                            timesWalked = 0;
+                        }
+                        break;
+                    case "down":
+                        moveUntilYouCant("down", "right", leftEdge, topEdge, rightEdge, bottomEdge, padding);
+                        if (timesWalked > walkAtLeast) {
+                            checkIftheresPathToGo(getRandomDirection("up", "down"));
+                            timesWalked = 0;
+                        }
+                        break;
+                }
+            }
+        };
+    }
+
+    @Override
+    public void run() {
+        this.animation.start();
+    }
+    
 }
