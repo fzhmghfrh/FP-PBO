@@ -65,4 +65,63 @@ public class Maze {
         this.obstacles.add(new BarObstacle(0, 0, "vertical", 25));
         // right
         this.obstacles.add(new BarObstacle(1225 - BarObstacle.THICKNESS, 0, "vertical", 25));
+        
+        //~~~~~~~~~~~~~~~~~~~~~~~~~ Islands ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // obsTopLeft
+        this.obstacles.add(new BarObstacle(12 * BarObstacle.THICKNESS, BarObstacle.THICKNESS, "vertical", 4));
+        // obsTopRight
+        this.obstacles.add(new BarObstacle(36 * BarObstacle.THICKNESS, BarObstacle.THICKNESS, "vertical", 4));
+        // obsBottomLeft
+        this.obstacles.add(new BarObstacle(12 * BarObstacle.THICKNESS, 600 - 4 * BarObstacle.THICKNESS, "vertical", 4));
+        // obsBottomRight
+        this.obstacles.add(new BarObstacle(36 * BarObstacle.THICKNESS, 600 - 4 * BarObstacle.THICKNESS, "vertical", 4));
+        // obsTopMiddle
+        this.obstacles.add(new BarObstacle(16 * BarObstacle.THICKNESS, 4 * BarObstacle.THICKNESS, "horizontal", 17));
+        // obsBottomMiddle
+        this.obstacles.add(new BarObstacle(16 * BarObstacle.THICKNESS, 600 - 4 * BarObstacle.THICKNESS, "horizontal", 17));
+        // obsLMTop
+        this.obstacles.add(new BarObstacle(8 * BarObstacle.THICKNESS, 8 * BarObstacle.THICKNESS, "horizontal", 5));
+        // obsLMTop4
+        this.obstacles.add(new BarObstacle(8 * BarObstacle.THICKNESS, 12 * BarObstacle.THICKNESS, "horizontal", 5));
+        // obsLMBottom
+        this.obstacles.add(new BarObstacle(8 * BarObstacle.THICKNESS, 16 * BarObstacle.THICKNESS, "horizontal", 5));
+        // obsRMTop
+        this.obstacles.add(new BarObstacle(36 * BarObstacle.THICKNESS, 8 * BarObstacle.THICKNESS, "horizontal", 5));
+        // obsRMTop2
+        this.obstacles.add(new BarObstacle(36 * BarObstacle.THICKNESS, 12 * BarObstacle.THICKNESS, "horizontal", 5));
+        // obsRMBottom
+        this.obstacles.add(new BarObstacle(36 * BarObstacle.THICKNESS, 16 * BarObstacle.THICKNESS, "horizontal", 5));
+        // LobsLeftTop1
+        this.obstacles.add(new BarObstacle(4 * BarObstacle.THICKNESS, 4 * BarObstacle.THICKNESS, "horizontal", 5));
+        // LobsLeftTop2
+        this.obstacles.add(new BarObstacle(4 * BarObstacle.THICKNESS, 5 * BarObstacle.THICKNESS, "vertical", 6));
+        // LobsLeftBottom1
+        this.obstacles.add(new BarObstacle(4 * BarObstacle.THICKNESS, 600 - 4 * BarObstacle.THICKNESS, "horizontal", 5));
+        // LobsLeftBottom2
+        this.obstacles.add(new BarObstacle(4 * BarObstacle.THICKNESS, 600 - 10 * BarObstacle.THICKNESS, "vertical", 6));
+        // LobsRightTop1
+        this.obstacles.add(new BarObstacle(40 * BarObstacle.THICKNESS, 4 * BarObstacle.THICKNESS, "horizontal", 5));
+        // LobsRightTop2
+        this.obstacles.add(new BarObstacle(44 * BarObstacle.THICKNESS, 5 * BarObstacle.THICKNESS, "vertical", 6));
+        // LobsRightBottom1
+        this.obstacles.add(new BarObstacle(40 * BarObstacle.THICKNESS, 600 - 4 * BarObstacle.THICKNESS, "horizontal", 5));
+        // LobsRightBottom2
+        this.obstacles.add(new BarObstacle(44 * BarObstacle.THICKNESS, 600 - 10 * BarObstacle.THICKNESS, "vertical", 6));
+        // cageBottom
+        this.obstacles.add(new BarObstacle(20 * BarObstacle.THICKNESS, 600 - 8 * BarObstacle.THICKNESS, "horizontal", 9));
+        // cageRightV
+        this.obstacles.add(new BarObstacle(32 * BarObstacle.THICKNESS, 600 - 16 * BarObstacle.THICKNESS, "vertical", 9));
+        // cageLeftV
+        this.obstacles.add(new BarObstacle(16 * BarObstacle.THICKNESS, 600 - 16 * BarObstacle.THICKNESS, "vertical", 9));
+        //cageMiddle
+        this.obstacles.add(new BarObstacle(20 * BarObstacle.THICKNESS, 600 - 12 * BarObstacle.THICKNESS, "horizontal", 9));
+        //cageTop
+        this.obstacles.add(new BarObstacle(20 * BarObstacle.THICKNESS, 600 - 16 * BarObstacle.THICKNESS, "horizontal", 9));
+        
+        //prison
+        //this.obstacles.add(new BarObstacle(28 * BarObstacle.THICKNESS, 600 - 16 * BarObstacle.THICKNESS, "vertical", 9));
+        //this.obstacles.add(new BarObstacle(20 * BarObstacle.THICKNESS, 600 - 16 * BarObstacle.THICKNESS, "vertical", 9));
+        
+        root.getChildren().addAll(obstacles);
+    }
 }
