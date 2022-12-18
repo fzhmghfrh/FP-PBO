@@ -18,7 +18,17 @@ public class Main extends Application {
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
         
+        Canvas canvas = new Canvas( 1225, 600 );
+        root.getChildren().add( canvas );
+        GameManager gameManager = new GameManager(root);
+
+        gameManager.drawBoard();
+
+        
+        theScene.addEventHandler(KeyEvent.KEY_PRESSED, event -> gameManager.movePacman(event));
+        theScene.addEventHandler(KeyEvent.KEY_RELEASED, event -> gameManager.stopPacman(event));
+        theScene.addEventHandler(KeyEvent.KEY_PRESSED, event -> gameManager.restartGame(event));
+
+        theStage.show();
     }
-
-
 }
