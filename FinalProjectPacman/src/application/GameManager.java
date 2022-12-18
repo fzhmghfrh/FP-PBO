@@ -24,6 +24,7 @@ public class GameManager {
     private Maze maze;
     private int lifes;
     private int score;
+    private int topscore;
     private Score scoreBoard;
     private boolean gameEnded;
     private int cookiesEaten;
@@ -43,6 +44,7 @@ public class GameManager {
         this.downPacmanAnimation = this.createAnimation("down");
         this.lifes = 3;
         this.score = 0;
+        this.topscore = 0;
         this.cookiesEaten = 0;
     }
 
@@ -63,6 +65,7 @@ public class GameManager {
         score -= 10;
         this.scoreBoard.lifes.setText("Lifes: " + this.lifes);
         this.scoreBoard.score.setText("Score: " + this.score);
+        this.scoreBoard.topscore.setText("Top Score: " + this.topscore);
         if (lifes == 0) {
             this.endGame();
         }
@@ -84,6 +87,7 @@ public class GameManager {
         endGame.setFill(Color.RED);
         root.getChildren().remove(this.scoreBoard.score);
         root.getChildren().remove(this.scoreBoard.lifes);
+        root.getChildren().remove(this.scoreBoard.topscore);
         root.getChildren().add(endGame);
     }
     
@@ -100,6 +104,7 @@ public class GameManager {
         winGame.setFill(Color.GREENYELLOW);
         root.getChildren().remove(this.scoreBoard.score);
         root.getChildren().remove(this.scoreBoard.lifes);
+        root.getChildren().remove(this.scoreBoard.topscore);
         root.getChildren().add(winGame);
     }
     /**
@@ -115,8 +120,12 @@ public class GameManager {
             this.pacman.setCenterX(2.5 * BarObstacle.THICKNESS);
             this.pacman.setCenterY(2.5 * BarObstacle.THICKNESS);
             this.lifes = 3;
+            if (this.score > this.topscore) {
+            	this.topscore = this.score;
+            }
             this.score = 0;
             this.cookiesEaten = 0;
+            this.scoreBoard.topscore.setText("Top Score: " + this.topscore);
             gameEnded = false;
         }
     }
