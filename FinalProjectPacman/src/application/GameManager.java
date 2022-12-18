@@ -272,4 +272,150 @@ public class GameManager {
                 break;
         }
     }
+    
+        public void stopPacman(KeyEvent event) {
+        switch(event.getCode()) {
+            case RIGHT:
+                this.rightPacmanAnimation.stop();
+                break;
+            case LEFT:
+                this.leftPacmanAnimation.stop();
+                break;
+            case UP:
+                this.upPacmanAnimation.stop();
+                break;
+            case DOWN:
+                this.downPacmanAnimation.stop();
+                break;
+        }
+    }
+
+    /**
+     * Creates an animation of the movement.
+     * @param direction
+     * @return
+     */
+    private AnimationTimer createAnimation(String direction) {
+        double step = 5;
+        return new AnimationTimer()
+        {
+            public void handle(long currentNanoTime)
+            {
+                switch (direction) {
+                    case "left":
+                        if (!maze.isTouching(pacman.getCenterX() - pacman.getRadius(), pacman.getCenterY(), 15)) {
+                            pacman.setCenterX(pacman.getCenterX() - step);
+                            checkCookieCoalition(pacman, "x");
+                            checkGhostCoalition();
+                        }
+                        break;
+                    case "right":
+                        if (!maze.isTouching(pacman.getCenterX() + pacman.getRadius(), pacman.getCenterY(), 15)) {
+                            pacman.setCenterX(pacman.getCenterX() + step);
+                            checkCookieCoalition(pacman, "x");
+                            checkGhostCoalition();
+                        }
+                        break;
+                    case "up":
+                        if (!maze.isTouching(pacman.getCenterX(), pacman.getCenterY() - pacman.getRadius(), 15)) {
+                            pacman.setCenterY(pacman.getCenterY() - step);
+                            checkCookieCoalition(pacman, "y");
+                            checkGhostCoalition();
+                        }
+                        break;
+                    case "down":
+                        if (!maze.isTouching(pacman.getCenterX(), pacman.getCenterY() + pacman.getRadius(), 15)) {
+                            pacman.setCenterY(pacman.getCenterY() + step);
+                            checkCookieCoalition(pacman, "y");
+                            checkGhostCoalition();
+                        }
+                        break;
+                }
+            }
+        };
+    }
+
+    /**
+     * Checks if the Pacman touches cookies.
+     * @param pacman
+     * @param axis
+     */
+    private void checkCookieCoalition(Pacman pacman, String axis) {
+        double pacmanCenterY = pacman.getCenterY();
+        double pacmanCenterX = pacman.getCenterX();
+        double pacmanLeftEdge = pacmanCenterX - pacman.getRadius();
+        double pacmanRightEdge = pacmanCenterX + pacman.getRadius();
+        double pacmanTopEdge = pacmanCenterY - pacman.getRadius();
+        double pacmanBottomEdge = pacmanCenterY + pacman.getRadius();
+        for (Cookie cookie:cookieSet) {
+            double cookieCenterX = cookie.getCenterX();
+            double cookieCenterY = cookie.getCenterY();
+            double cookieLeftEdge = cookieCenterX - cookie.getRadius();
+            double cookieRightEdge = cookieCenterX + cookie.getRadius();
+            double cookieTopEdge = cookieCenterY - cookie.getRadius();
+            double cookieBottomEdge = cookieCenterY + cookie.getRadius();
+            if (axis.equals("x")) {
+                // pacman goes right
+                if ((cookieCenterY >= pacmanTopEdge && cookieCenterY <= pacmanBottomEdge) && (pacmanRightEdge >= cookieLeftEdge && pacmanRightEdge <= cookieRightEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                        this.cookiesEaten++;
+                    }
+                    cookie.hide();
+                }
+                // pacman goes left
+                if ((cookieCenterY >= pacmanTopEdge && cookieCenterY <= pacmanBottomEdge) && (pacmanLeftEdge >= cookieLeftEdge && pacmanLeftEdge <= cookieRightEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                        this.cookiesEaten++;
+                    }
+                    cookie.hide();
+                }
+            } else {
+                // pacman goes up
+                if ((cookieCenterX >= pacmanLeftEdge && cookieCenterX <= pacmanRightEdge) && (pacmanBottomEdge >= cookieTopEdge && pacmanBottomEdge <= cookieBottomEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                        this.cookiesEaten++;
+                    }
+                    cookie.hide();
+                }
+                // pacman goes down
+                if ((cookieCenterX >= pacmanLeftEdge && cookieCenterX <= pacmanRightEdge) && (pacmanTopEdge <= cookieBottomEdge && pacmanTopEdge >= cookieTopEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                        this.cookiesEaten++;
+                    }
+                    cookie.hide();
+                }
+            }
+            this.scoreBoard.score.setText("Score: " + this.score);
+            if (this.cookiesEaten == this.cookieSet.size()) {
+                this.winGame();
+            }
+        }
+    }
+
+    /**
+     * Checks if pacman is touching a ghost
+     */
+    public void checkGhostCoalition() {
+        double pacmanCenterY = pacman.getCenterY();
+        double pacmanCenterX = pacman.getCenterX();
+        double pacmanLeftEdge = pacmanCenterX - pacman.getRadius();
+        double pacmanRightEdge = pacmanCenterX + pacman.getRadius();
+        double pacmanTopEdge = pacmanCenterY - pacman.getRadius();
+        double pacmanBottomEdge = pacmanCenterY + pacman.getRadius();
+        for (Ghost ghost : ghosts) {
+            double ghostLeftEdge = ghost.getX();
+            double ghostRightEdge = ghost.getX() + ghost.getWidth();
+            double ghostTopEdge = ghost.getY();
+            double ghostBottomEdge = ghost.getY() + ghost.getHeight();
+            if ((pacmanLeftEdge <= ghostRightEdge && pacmanLeftEdge >= ghostLeftEdge) || (pacmanRightEdge >= ghostLeftEdge && pacmanRightEdge <= ghostRightEdge)) {
+                if ((pacmanTopEdge <= ghostBottomEdge && pacmanTopEdge >= ghostTopEdge) || (pacmanBottomEdge >= ghostTopEdge && pacmanBottomEdge <= ghostBottomEdge)) {
+                    lifeLost();
+                }
+            }
+        }
+    }
 }
