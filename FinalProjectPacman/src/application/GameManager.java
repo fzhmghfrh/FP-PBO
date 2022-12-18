@@ -46,6 +46,7 @@ public class GameManager {
         this.score = 0;
         this.topscore = 0;
         this.cookiesEaten = 0;
+        this.level = 1;
     }
 
     /**
@@ -91,6 +92,9 @@ public class GameManager {
         root.getChildren().add(endGame);
     }
     
+    /**
+     * Wins the game
+     */
     private void winGame() {
         this.gameEnded = true;
         root.getChildren().remove(pacman);
@@ -107,6 +111,28 @@ public class GameManager {
         root.getChildren().remove(this.scoreBoard.topscore);
         root.getChildren().add(winGame);
     }
+    
+    /**
+     * Go to next level
+     */
+    public void nextGame() {
+            root.getChildren().clear();
+            this.cookieSet.clear();
+            this.ghosts.clear();
+            this.drawBoard();
+            this.pacman.setCenterX(2.5 * BarObstacle.THICKNESS);
+            this.pacman.setCenterY(2.5 * BarObstacle.THICKNESS);
+            this.scoreBoard.lifes.setText("Lifes: " + this.lifes);
+            this.scoreBoard.score.setText("Score: " + this.score);
+            this.scoreBoard.topscore.setText("Top Score: " + this.topscore);
+            this.cookiesEaten = 0;
+            this.level++;
+            if (this.level == 3) {
+            	this.winGame();
+            }
+            gameEnded = false;
+    }
+    
     /**
      * Restart the game
      * @param event
@@ -404,7 +430,7 @@ public class GameManager {
             }
             this.scoreBoard.score.setText("Score: " + this.score);
             if (this.cookiesEaten == this.cookieSet.size()) {
-                this.winGame();
+                this.nextGame();
             }
         }
     }
