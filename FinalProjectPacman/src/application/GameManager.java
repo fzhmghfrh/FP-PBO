@@ -273,6 +273,10 @@ public class GameManager {
         }
     }
     
+    /**
+     * Stops the pacman
+     * @param event
+     */
         public void stopPacman(KeyEvent event) {
         switch(event.getCode()) {
             case RIGHT:
