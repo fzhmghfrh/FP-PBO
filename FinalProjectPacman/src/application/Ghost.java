@@ -143,9 +143,7 @@ public class Ghost extends Rectangle implements Runnable {
 
     }
     
-    /**
-     * Creates an animation of the ghost
-     */
+    
     public void createAnimation() {
 
         this.animation = new AnimationTimer()
