@@ -31,4 +31,8 @@ public class Main extends Application {
 
         theStage.show();
     }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
